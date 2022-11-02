@@ -12,13 +12,6 @@
         div.dc-chart {
             float: left;
         }
-        #monthly-volume-chart g.y {
-            display: none;
-        }
-        #logo {
-            margin-right: 2em;
-            margin-top: 2em;
-        }
     </style>
 </head>
 <body>
@@ -36,65 +29,19 @@
 
 <div id="content" style="display:none">
     <div class="row">
-        <!-- <div id="yearly-bubble-chart" class="dc-chart">
-            <strong>Yearly Performance</strong> (radius: fluctuation/index ratio, color: gain/loss)
-            <a class="reset" href="javascript:yearlyBubbleChart.filterAll();chartGroup.redrawAll();"
-                style="display: none;">reset</a>
-
-            <div class="clearfix"></div>
-        </div> -->
-    </div>
-
-    <div class="row">
         <div id="severity-chart">
             <strong>Vulnerability Severity</strong>
-            <a class="reset" href="javascript:severityChart.filterAll();chartGroup.redrawAll();"
-                style="display: none;">reset</a>
+            <a class="reset" href="javascript:severityChart.filterAll();chartGroup.redrawAll();" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
 
         <div id="images-chart">
             <strong>Images</strong>
-            <a class="reset" href="javascript:imagesChart.filterAll();chartGroup.redrawAll();"
-                style="display: none;">reset</a>
+            <a class="reset" href="javascript:imagesChart.filterAll();chartGroup.redrawAll();" style="display: none;">reset</a>
 
             <div class="clearfix"></div>
         </div>
-
-        <!-- <div id="day-of-week-chart">
-            <strong>Day of Week</strong>
-            <a class="reset" href="javascript:dayOfWeekChart.filterAll();chartGroup.redrawAll();"
-                style="display: none;">reset</a>
-
-            <div class="clearfix"></div>
-        </div> -->
-
-        <!-- <div id="fluctuation-chart">
-            <strong>Days by Fluctuation(%)</strong>
-            <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-            <a class="reset" href="javascript:fluctuationChart.filterAll();chartGroup.redrawAll();"
-                style="display: none;">reset</a>
-
-            <div class="clearfix"></div>
-        </div> -->
-    </div>
-
-    <div class="row">
-        <!-- <div id="monthly-move-chart">
-            <strong>Monthly Index Abs Move & Volume/500,000 Chart</strong>
-            <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-            <a class="reset" href="javascript:moveChart.filterAll();volumeChart.filterAll();chartGroup.redrawAll();"
-                style="display: none;">reset</a>
-
-            <div class="clearfix"></div>
-        </div> -->
-    </div>
-
-    <div class="row">
-        <div id="monthly-volume-chart">
-        </div>
-        <p class="muted pull-right" style="margin-right: 15px;">select a time range to zoom in</p>
     </div>
 
     <div class="row">

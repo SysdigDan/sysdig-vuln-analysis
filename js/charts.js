@@ -1,12 +1,12 @@
+const chartGroup = new dc.ChartGroup();
+
+// ### Create Chart Objects
+const severityChart = new dc.PieChart('#severity-chart', chartGroup);
+const imagesChart = new dc.RowChart('#images-chart', chartGroup);
+const vulnCount = new dc.DataCount('.dc-data-count', chartGroup);
+const vulnTable = new dc.DataTable('.dc-data-table', chartGroup);
+
 function loadCsv(path) {
-    const chartGroup = new dc.ChartGroup();
-
-    // ### Create Chart Objects
-    const severityChart = new dc.PieChart('#severity-chart', chartGroup);
-    const imagesChart = new dc.RowChart('#images-chart', chartGroup);
-    const vulnCount = new dc.DataCount('.dc-data-count', chartGroup);
-    const vulnTable = new dc.DataTable('.dc-data-table', chartGroup);
-
     $('#content').show();
 
     d3.csv(path).then(data => {
@@ -66,8 +66,7 @@ function loadCsv(path) {
                     dimension: images,
                     group: imagesGroup,
                 })
-            )
-            .margins({ top: 20, left: 10, right: 10, bottom: 20 });
+            );
 
         vulnCount /* dc.dataCount('.dc-data-count', 'chartGroup'); */
             .configure({
