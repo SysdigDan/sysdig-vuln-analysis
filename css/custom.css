@@ -66,6 +66,6 @@ hr.rounded {
 .dc-chart .selected path,
 .dc-chart .selected circle {
   stroke-width: 1.5;
-  stroke: rgb(42, 42, 42);
+  stroke: #a9a7a7;
   fill-opacity: 1;
 }
