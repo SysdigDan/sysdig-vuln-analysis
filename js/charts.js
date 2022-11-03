@@ -1,10 +1,12 @@
 var severityChart = new dc.PieChart('#severity-chart');
+var exploitableChart = new dc.PieChart("#exploitable-chart")
 var imageChart = new dc.RowChart("#image-chart");
 var packageChart = new dc.RowChart("#package-chart");
 var vulnCount = new dc.DataCount('.dc-data-count');
 var vulnTable = new dc.DataTable('.dc-data-table');
 var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
 var searchWidget = new dc.TextFilterWidget("#search-widget")
+
 
 function loadCsv(path) {
     $('#content').show();
@@ -25,6 +27,7 @@ function loadCsv(path) {
             d.Cluster = d['K8S cluster name'];
             d.Namespace = d['K8S namespace name'];
             d.Workload = d['K8S workload name'];
+            d.PublicExploit = d['Public Exploit'];
 
         });
 
@@ -37,6 +40,9 @@ function loadCsv(path) {
 
         var image = ndx.dimension(function (d) { return d.Image; });
         var imageGroup = image.group().reduceCount();
+
+        var exploitable = ndx.dimension(function (d) { return d.PublicExploit; });
+        var exploitableGroup = exploitable.group().reduceCount();
 
         var severity = ndx.dimension(function (d) { return d.Severity; });
         var severityGroup = severity.group().reduceCount();
@@ -52,8 +58,20 @@ function loadCsv(path) {
         searchWidget
             .dimension(vulnID);
 
+        exploitableChart
+            .width(300)
+            .height(480)
+            .slicesCap(4)
+            // .innerRadius(50)
+            // .externalLabels(50)
+            .externalRadiusPadding(50)
+            .drawPaths(false)
+            .legend(dc.legend().x(20).y(20).itemHeight(13).gap(10))
+            .dimension(exploitable)
+            .group(exploitableGroup);
+
         severityChart
-            .width(600)
+            .width(300)
             .height(480)
             .slicesCap(4)
             // .innerRadius(50)
@@ -100,16 +118,16 @@ function loadCsv(path) {
             .html({
                 some:
                     '<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records' +
-                    " | <a href='javascript:chartGroup.filterAll(); chartGroup.redrawAll();'>Reset All</a>",
+                    " | <a href='javascript:dc.filterAll(); dc.redrawAll();'>Reset All</a>",
                 all: 'All records selected. Please click on the graph to apply filters.',
             })
             .crossfilter(ndx)
             .groupAll(all);
 
         vulnTable
+            .width(1200)
             .dimension(vulnID)
             // .group(function (d) { return d.Severity; })
-
             .size(Infinity)
             .columns([
                 {
@@ -132,6 +150,15 @@ function loadCsv(path) {
                         return d['Package name'] + ":" + d['Package version'];
                     }
                 },
+                {
+                    label: 'Public Exploit',
+                    format: function (d) {
+                        return d.PublicExploit;
+                    }
+                },
+                // 'Cluster',
+                // 'Namespace',
+                // 'Workload',
             ])
             .sortBy(function (d) { return d.Severity; })
             .order(d3.ascending)
