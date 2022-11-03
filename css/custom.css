@@ -54,3 +54,18 @@ hr.rounded {
   border-top: 8px solid #bbb;
   border-radius: 5px;
 }
+
+.dc-chart g.deselected path {
+  fill: #dadada;
+}
+
+.dc-chart rect.deselected {
+  fill: #dadada;
+}
+
+.dc-chart .selected path,
+.dc-chart .selected circle {
+  stroke-width: 1.5;
+  stroke: rgb(42, 42, 42);
+  fill-opacity: 1;
+}
