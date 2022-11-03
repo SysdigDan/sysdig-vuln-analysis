@@ -1,5 +1,6 @@
 var severityChart = new dc.PieChart('#severity-chart');
 var imageChart = new dc.RowChart("#image-chart");
+var packageChart = new dc.RowChart("#package-chart");
 var vulnCount = new dc.DataCount('.dc-data-count');
 var vulnTable = new dc.DataTable('.dc-data-table');
 
@@ -11,12 +12,14 @@ function loadCsv(path) {
         const dateFormat = d3.timeFormat(dateFormatSpecifier);
         const dateFormatParser = d3.timeParse(dateFormatSpecifier);
         const numberFormat = d3.format('.2f');
-        var topImages = 10;
+        const topImages = 10;
+        const topPackages = 10;
 
         vulnerabilities.forEach(function (d) {
             d.VulnID = d['Vulnerability ID'];
             d.Image = d['Image'];
             d.Severity = d['Severity'];
+            d.Package = d['Package name'] + ':' + d['Package version'];
         });
 
         var ndx = crossfilter(vulnerabilities);
@@ -31,6 +34,9 @@ function loadCsv(path) {
 
         var severity = ndx.dimension(function (d) { return d.Severity; });
         var severityGroup = severity.group().reduceCount();
+
+        var package = ndx.dimension(function (d) { return d.Package; });
+        var packageGroup = package.group();
 
         severityChart
             .width(480)
@@ -51,6 +57,17 @@ function loadCsv(path) {
             .elasticX(true)
             .dimension(image)
             .group(imageGroup)
+            .data(function (group) {
+                return group.top(topImages);
+            })
+
+        packageChart
+            .width(1200)
+            .height(200)
+            .x(d3.scaleLinear().domain([6, 20]))
+            .elasticX(true)
+            .dimension(package)
+            .group(packageGroup)
             .data(function (group) {
                 return group.top(topImages);
             })
