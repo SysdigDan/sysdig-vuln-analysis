@@ -1,3 +1,6 @@
+
+// dc.config.defaultColors(d3.schemeDark2)
+
 var severityChart = new dc.PieChart('#severity-chart');
 var exploitableChart = new dc.PieChart("#exploitable-chart")
 var imageChart = new dc.RowChart("#image-chart");
@@ -6,7 +9,6 @@ var vulnCount = new dc.DataCount('.dc-data-count');
 var vulnTable = new dc.DataTable('.dc-data-table');
 var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
 var searchWidget = new dc.TextFilterWidget("#search-widget")
-
 
 function loadCsv(path) {
     $('#content').show();
