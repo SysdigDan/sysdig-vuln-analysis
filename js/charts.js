@@ -60,7 +60,7 @@ function loadCsv(path) {
 
         exploitableChart
             .width(300)
-            .height(480)
+            .height(400)
             .slicesCap(4)
             // .innerRadius(50)
             // .externalLabels(50)
@@ -72,7 +72,7 @@ function loadCsv(path) {
 
         severityChart
             .width(300)
-            .height(480)
+            .height(400)
             .slicesCap(4)
             // .innerRadius(50)
             // .externalLabels(50)
@@ -84,7 +84,7 @@ function loadCsv(path) {
 
         kuberentesChart
             .width(600)
-            .height(480)
+            .height(400)
             .innerRadius(100)
             .dimension(kuberentesDimension)
             .group(kuberentesGroup)
