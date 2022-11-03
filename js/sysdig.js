@@ -1,37 +1,48 @@
 // https://github.com/d3/d3-scale-chromatic
 dc.config.defaultColors(d3.schemePaired)
 
-
-var severityChart = new dc.PieChart('#severity-chart');
-var exploitableChart = new dc.PieChart("#exploitable-chart")
-var imageChart = new dc.RowChart("#image-chart");
-var packageChart = new dc.RowChart("#package-chart");
-var vulnCount = new dc.DataCount('.dc-data-count');
-var vulnTable = new dc.DataTable('.dc-data-table');
-var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
-var searchWidget = new dc.TextFilterWidget("#search-widget")
-
 function loadCsv(path) {
+    var severityChart = new dc.PieChart('#severity-chart');
+    var exploitableChart = new dc.PieChart("#exploitable-chart")
+    var imageChart = new dc.RowChart("#image-chart");
+    var packageChart = new dc.RowChart("#package-chart");
+    var vulnCount = new dc.DataCount('.dc-data-count');
+    var vulnTable = new dc.DataTable('.dc-data-table');
+    var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
+    var searchWidget = new dc.TextFilterWidget("#search-widget")
+
     $('#content').show();
 
-    d3.csv("data/sysdig-example.csv").then(function (vulnerabilities) {
+    d3.csv(path).then(function (vulnerabilities) {
         const dateFormatSpecifier = '%d/%m/%Y';
         const dateFormat = d3.timeFormat(dateFormatSpecifier);
         const dateFormatParser = d3.timeParse(dateFormatSpecifier);
         const numberFormat = d3.format('.2f');
         const topImages = 10;
         const topPackages = 10;
+        const topRows = 500;
 
         vulnerabilities.forEach(function (d) {
             d.VulnID = d['Vulnerability ID'];
             d.Image = d['Image'];
             d.Severity = d['Severity'];
+            if (d.Severity == 'Critical') {
+                d.SeveritySort = 1;
+            } else if (d.Severity == 'High') {
+                d.SeveritySort = 2;
+            } else if (d.Severity == 'Medium') {
+                d.SeveritySort = 3;
+            } else if (d.Severity == 'Low') {
+                d.SeveritySort = 4;
+            } else {
+                d.SeveritySort = 5;
+            }
             d.Package = d['Package name'] + ':' + d['Package version'];
             d.Cluster = d['K8S cluster name'];
             d.Namespace = d['K8S namespace name'];
             d.Workload = d['K8S workload name'];
             d.PublicExploit = d['Public Exploit'];
-
+            d
         });
 
         var ndx = crossfilter(vulnerabilities);
@@ -40,6 +51,7 @@ function loadCsv(path) {
         // Create dimensions
         var vulnID = ndx.dimension(function (d) { return d.VulnID; });
         var vulnGroup = vulnID.group().reduceCount();
+        var sortedDescending = vulnID.group().top(Number.POSITIVE_INFINITY)
 
         var image = ndx.dimension(function (d) { return d.Image; });
         var imageGroup = image.group().reduceCount();
@@ -61,29 +73,41 @@ function loadCsv(path) {
         searchWidget
             .dimension(vulnID);
 
-        exploitableChart
-            .width(300)
-            .height(400)
-            .slicesCap(4)
-            // .innerRadius(50)
-            // .externalLabels(50)
-            .externalRadiusPadding(50)
-            .drawPaths(false)
-            .legend(dc.legend().x(20).y(20).itemHeight(13).gap(10))
-            .dimension(exploitable)
-            .group(exploitableGroup);
-
         severityChart
             .width(300)
             .height(400)
-            .slicesCap(4)
+            .slicesCap(5)
             // .innerRadius(50)
             // .externalLabels(50)
             .externalRadiusPadding(50)
             .drawPaths(false)
-            .legend(dc.legend().x(20).y(20).itemHeight(13).gap(10))
+            .legend(dc.legend()
+                .legendText(function (d) { return d.name + ' | ' + d.data; })
+                .x(20)
+                .y(20)
+                .itemHeight(10)
+                .gap(8)
+                .horizontal(false))
             .dimension(severity)
             .group(severityGroup);
+
+        exploitableChart
+            .width(300)
+            .height(400)
+            .slicesCap(2)
+            // .innerRadius(50)
+            // .externalLabels(50)
+            .externalRadiusPadding(50)
+            .drawPaths(false)
+            .legend(dc.legend()
+                .legendText(function (d) { return d.name + ' | ' + d.data; })
+                .x(20)
+                .y(20)
+                .itemHeight(10)
+                .gap(8)
+                .horizontal(false))
+            .dimension(exploitable)
+            .group(exploitableGroup);
 
         kuberentesChart
             .width(600)
@@ -113,7 +137,7 @@ function loadCsv(path) {
             .dimension(package)
             .group(packageGroup)
             .data(function (group) {
-                return group.top(topImages);
+                return group.top(topPackages);
             });
 
         vulnCount
@@ -129,9 +153,11 @@ function loadCsv(path) {
 
         vulnTable
             .width(1200)
-            .dimension(vulnID)
-            // .group(function (d) { return d.Severity; })
-            .size(Infinity)
+            .dimension(severity)
+            .data(function (group) {
+                return group.top(topRows);
+            })
+            .size(topRows)
             .columns([
                 {
                     label: 'CVE',
@@ -163,7 +189,8 @@ function loadCsv(path) {
                 // 'Namespace',
                 // 'Workload',
             ])
-            .sortBy(function (d) { return d.Severity; })
+            .sortBy(function (d) {
+                return d.SeveritySort; })
             .order(d3.ascending)
             .on('renderlet', function (table) {
                 table.selectAll('.dc-table-group').classed('info', true);

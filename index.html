@@ -26,17 +26,26 @@
       <input id="csvFile" type="file" accept="text/csv">
       <button class="btn btn-info btn-lg pull-right" type="button" onclick="loadCsv('data/sysdig-example.csv')">Try Example Sysdig Report</button>
       <button class="btn btn-info btn-lg pull-right" type="button" id="download">Download Results</button>
-      <hr class="solid">
     </div>
 
     <div id="content" style="display:none">
 
       <div class="row">
+        <hr class="solid">
         <div id="search-widget">
           <strong>CVE Search: </strong>
           <a class="reset" href="javascript:searchWidget.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="dc-data-count">
+            <span class="filter-count"></span> selected out of <span class="total-count"></span> records | <a
+              href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+          </div>
         </div>
       </div>
 
@@ -49,12 +58,14 @@
 
           <div class="clearfix"></div>
         </div>
+
         <div id="exploitable-chart">
           <strong>Public Exploit </strong>
           <a class="reset" href="javascript:exploitableChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
         </div>
+
         <div id="kuberentes-chart">
           <strong>Vulnerability Location - Kubernetes</strong>
           <a class="reset" href="javascript:kuberentesChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
@@ -64,6 +75,7 @@
       </div>
 
       <div class="row">
+        <hr class="solid">
         <div id="image-chart">
           <strong>Vulnerabilities by Images (Top 10) </strong>
           <a class="reset" href="javascript:imageChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
@@ -73,6 +85,7 @@
       </div>
 
       <div class="row">
+        <hr class="solid">
         <div id="package-chart">
           <strong>Vulnerabilities by Package (Top 10) </strong>
           <a class="reset" href="javascript:packageChart.filterAll();dc.redrawAll();"
@@ -80,20 +93,14 @@
 
           <div class="clearfix"></div>
         </div>
-
       </div>
 
       <div class="row">
+        <hr class="solid">
         <div>
-          <div class="dc-data-count">
-            <span class="filter-count"></span> selected out of <span class="total-count"></span> records | <a
-              href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
-          </div>
+          <strong>Vulnerabilities List (Max 1000) </strong>
         </div>
-
-        <table class="table table-hover dc-data-table">
-        </table>
-
+        <table class="table table-hover dc-data-table"></table>
       </div>
     </div>
 
