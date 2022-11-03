@@ -34,6 +34,21 @@ div.dc-chart {
   text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
 }
 
+/* Dashed border */
+hr.dashed {
+  border-top: 3px dashed #bbb;
+}
+
+/* Dotted border */
+hr.dotted {
+  border-top: 3px dotted #bbb;
+}
+
+/* Solid border */
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
 /* Rounded border */
 hr.rounded {
   border-top: 8px solid #bbb;

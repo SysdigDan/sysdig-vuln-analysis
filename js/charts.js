@@ -4,7 +4,7 @@ var packageChart = new dc.RowChart("#package-chart");
 var vulnCount = new dc.DataCount('.dc-data-count');
 var vulnTable = new dc.DataTable('.dc-data-table');
 var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
-
+var searchWidget = new dc.TextFilterWidget("#search-widget")
 
 function loadCsv(path) {
     $('#content').show();
@@ -48,6 +48,9 @@ function loadCsv(path) {
             return [d.Cluster, d.Namespace, d.Workload];
         });
         var kuberentesGroup = kuberentesDimension.group();
+
+        searchWidget
+            .dimension(vulnID);
 
         severityChart
             .width(600)
