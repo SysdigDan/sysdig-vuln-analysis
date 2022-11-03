@@ -27,6 +27,7 @@
     </div>
 
     <div id="content" style="display:none">
+
       <div class="row">
         <div id="severity-chart">
           <strong>Vulnerabilities Severity </strong>
@@ -35,10 +36,9 @@
 
           <div class="clearfix"></div>
         </div>
-        <div id="image-chart">
-          <strong>Vulnerabilities by Images (Top 10) </strong>
-          <a class="reset" href="javascript:imageChart.filterAll();dc.redrawAll();"
-          style="display: none;">reset</a>
+        <div id="kuberentes-chart">
+          <strong>Vulnerability Location - Kubernetes</strong>
+          <a class="reset" href="javascript:kuberentesChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
         </div>
@@ -54,6 +54,15 @@
           <div class="clearfix"></div>
         </div>
 
+      </div>
+
+      <div class="row">
+        <div id="image-chart">
+          <strong>Vulnerabilities by Images (Top 10) </strong>
+          <a class="reset" href="javascript:imageChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+
+          <div class="clearfix"></div>
+        </div>
       </div>
 
       <div class="row">

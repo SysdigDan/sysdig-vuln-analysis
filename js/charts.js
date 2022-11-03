@@ -3,6 +3,8 @@ var imageChart = new dc.RowChart("#image-chart");
 var packageChart = new dc.RowChart("#package-chart");
 var vulnCount = new dc.DataCount('.dc-data-count');
 var vulnTable = new dc.DataTable('.dc-data-table');
+var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
+
 
 function loadCsv(path) {
     $('#content').show();
@@ -20,6 +22,10 @@ function loadCsv(path) {
             d.Image = d['Image'];
             d.Severity = d['Severity'];
             d.Package = d['Package name'] + ':' + d['Package version'];
+            d.Cluster = d['K8S cluster name'];
+            d.Namespace = d['K8S namespace name'];
+            d.Workload = d['K8S workload name'];
+
         });
 
         var ndx = crossfilter(vulnerabilities);
@@ -38,8 +44,13 @@ function loadCsv(path) {
         var package = ndx.dimension(function (d) { return d.Package; });
         var packageGroup = package.group();
 
+        var kuberentesDimension = ndx.dimension(function (d) {
+            return [d.Cluster, d.Namespace, d.Workload];
+        });
+        var kuberentesGroup = kuberentesDimension.group();
+
         severityChart
-            .width(480)
+            .width(600)
             .height(480)
             .slicesCap(4)
             // .innerRadius(50)
@@ -48,7 +59,16 @@ function loadCsv(path) {
             .drawPaths(false)
             .legend(dc.legend().x(20).y(20).itemHeight(13).gap(10))
             .dimension(severity)
-            .group(severityGroup)
+            .group(severityGroup);
+
+        kuberentesChart
+            .width(600)
+            .height(480)
+            .innerRadius(100)
+            .dimension(kuberentesDimension)
+            .group(kuberentesGroup)
+            // .legend(dc.legend().x(400).y(120).itemHeight(13).gap(10))
+            // .ringSizes(kuberentesChart.equalRingSizes());
 
         imageChart
             .width(700)
@@ -59,7 +79,7 @@ function loadCsv(path) {
             .group(imageGroup)
             .data(function (group) {
                 return group.top(topImages);
-            })
+            });
 
         packageChart
             .width(1200)
@@ -70,7 +90,7 @@ function loadCsv(path) {
             .group(packageGroup)
             .data(function (group) {
                 return group.top(topImages);
-            })
+            });
 
         vulnCount
             .groupAll(all)
@@ -114,7 +134,7 @@ function loadCsv(path) {
             .order(d3.ascending)
             .on('renderlet', function (table) {
                 table.selectAll('.dc-table-group').classed('info', true);
-            })
+            });
 
         d3.select('#download')
             .on('click', function () {
