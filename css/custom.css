@@ -2,15 +2,19 @@
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 1200px;
+  width: 1400px;
 }
 
+.body {
+  width: 1400px;
+}
 .row {
-  width: 1200px;
+  width: 1400px;
+  margin-left: 0px;
 }
 
 .content {
-  width: 1200px;
+  width: 1400px;
 }
 
 div.dc-chart {
