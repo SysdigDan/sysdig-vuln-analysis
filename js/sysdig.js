@@ -1,15 +1,19 @@
 // https://github.com/d3/d3-scale-chromatic
 dc.config.defaultColors(d3.schemePaired)
 
+var severityChart = new dc.PieChart('#severity-chart');
+var exploitableChart = new dc.PieChart("#exploitable-chart")
+var imageChart = new dc.RowChart("#image-chart");
+var packageChart = new dc.RowChart("#package-chart");
+var vulnCount = new dc.DataCount('.dc-data-count');
+var vulnTable = new dc.DataTable('.dc-data-table');
+var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
+var searchWidget = new dc.TextFilterWidget("#search-widget")
+
+var myColor = d3.scaleOrdinal().domain([5, 4, 3, 2, 1]).range(d3.schemeSet1);
+console.log(myColor)
+
 function loadCsv(path) {
-    var severityChart = new dc.PieChart('#severity-chart');
-    var exploitableChart = new dc.PieChart("#exploitable-chart")
-    var imageChart = new dc.RowChart("#image-chart");
-    var packageChart = new dc.RowChart("#package-chart");
-    var vulnCount = new dc.DataCount('.dc-data-count');
-    var vulnTable = new dc.DataTable('.dc-data-table');
-    var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
-    var searchWidget = new dc.TextFilterWidget("#search-widget")
 
     $('#content').show();
 
@@ -81,6 +85,10 @@ function loadCsv(path) {
             // .externalLabels(50)
             .externalRadiusPadding(50)
             .drawPaths(false)
+            .colors(d3.scaleOrdinal()
+                .domain(["Critical", "High", "Medium", "Low", "Negligible"])
+                .range(["#AE44C5", "#EE635E", "#FA8C16", "#F6CA09", "#91A7B3"])
+                )
             .legend(dc.legend()
                 .legendText(function (d) { return d.name + ' | ' + d.data; })
                 .x(20)
@@ -99,6 +107,10 @@ function loadCsv(path) {
             // .externalLabels(50)
             .externalRadiusPadding(50)
             .drawPaths(false)
+            .colors(d3.scaleOrdinal()
+                .domain(["true", "false"])
+                .range(["#EC7063", "#52BE80"])
+            )
             .legend(dc.legend()
                 .legendText(function (d) { return d.name + ' | ' + d.data; })
                 .x(20)

@@ -34,7 +34,6 @@
         <hr class="solid">
         <div id="search-widget">
           <strong>CVE Search: </strong>
-          <a class="reset" href="javascript:searchWidget.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
         </div>
@@ -43,8 +42,7 @@
       <div class="row">
         <div>
           <div class="dc-data-count">
-            <span class="filter-count"></span> selected out of <span class="total-count"></span> records | <a
-              href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
+            <span class="filter-count"></span> selected out of <span class="total-count"></span> records | <a href="javascript:dc.filterAll();dc.redrawAll();">Reset All</a>
           </div>
         </div>
       </div>
@@ -53,21 +51,20 @@
         <hr class="solid">
         <div id="severity-chart">
           <strong>Vulnerabilities Severity </strong>
-          <a class="reset" href="javascript:severityChart.filterAll();dc.redrawAll();"
-          style="display: none;">reset</a>
+          <a class="reset" href="javascript:severityChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
         </div>
 
         <div id="exploitable-chart">
-          <strong>Public Exploit </strong>
+          <strong>Public Exploit Available</strong>
           <a class="reset" href="javascript:exploitableChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
         </div>
 
         <div id="kuberentes-chart">
-          <strong>Vulnerability Location - Kubernetes</strong>
+          <strong>Kubernetes Vulnerability Mapping</strong>
           <a class="reset" href="javascript:kuberentesChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
@@ -88,8 +85,7 @@
         <hr class="solid">
         <div id="package-chart">
           <strong>Vulnerabilities by Package (Top 10) </strong>
-          <a class="reset" href="javascript:packageChart.filterAll();dc.redrawAll();"
-          style="display: none;">reset</a>
+          <a class="reset" href="javascript:packageChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
 
           <div class="clearfix"></div>
         </div>
@@ -110,13 +106,13 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
   <script type="text/javascript" src="js/crossfilter.js"></script>
   <script type="text/javascript" src="js/dc.js"></script>
   <script type="text/javascript" src="js/FileSaver.js"></script>
   <script type="text/javascript" src="js/sysdig.js"></script>
 
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NYRWT6KEBM"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
