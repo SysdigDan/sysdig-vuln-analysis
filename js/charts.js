@@ -1,127 +1,112 @@
-const chartGroup = new dc.ChartGroup();
-
-// ### Create Chart Objects
-const severityChart = new dc.PieChart('#severity-chart', chartGroup);
-const imagesChart = new dc.RowChart('#images-chart', chartGroup);
-const vulnCount = new dc.DataCount('.dc-data-count', chartGroup);
-const vulnTable = new dc.DataTable('.dc-data-table', chartGroup);
+var severityChart = new dc.PieChart('#severity-chart');
+var imageChart = new dc.RowChart("#image-chart");
+var vulnCount = new dc.DataCount('.dc-data-count');
+var vulnTable = new dc.DataTable('.dc-data-table');
 
 function loadCsv(path) {
     $('#content').show();
 
-    d3.csv(path).then(data => {
+    d3.csv("data/sysdig-example.csv").then(function (vulnerabilities) {
         const dateFormatSpecifier = '%d/%m/%Y';
         const dateFormat = d3.timeFormat(dateFormatSpecifier);
         const dateFormatParser = d3.timeParse(dateFormatSpecifier);
         const numberFormat = d3.format('.2f');
-        const totalWidth = 990;
+        var topImages = 10;
 
-        data.forEach(d => {
-            d.pubDate = dateFormatParser(d['Vuln Publish date']);
-            d.severity = d['Severity'];
-            d.images = d['Image'];
+        vulnerabilities.forEach(function (d) {
+            d.VulnID = d['Vulnerability ID'];
+            d.Image = d['Image'];
+            d.Severity = d['Severity'];
         });
 
-        //### Create Crossfilter Dimensions and Groups
-        const ndx = crossfilter(data);
-        const all = ndx.groupAll();
+        var ndx = crossfilter(vulnerabilities);
+        var all = ndx.groupAll();
 
-        // Create date dimensions
-        const dateDimension = ndx.dimension(d => d.pubDate);
+        // Create dimensions
+        var vulnID = ndx.dimension(function (d) { return d.VulnID; });
+        var vulnGroup = vulnID.group().reduceCount();
 
-        // Create severity dimension
-        const severity = ndx.dimension(d => d.severity);
-        const severityGroup = severity.group();
+        var image = ndx.dimension(function (d) { return d.Image; });
+        var imageGroup = image.group().reduceCount();
 
-        // Create images dimension
-        const images = ndx.dimension(d => d.images);
-        const imagesGroup = images.group();
+        var severity = ndx.dimension(function (d) { return d.Severity; });
+        var severityGroup = severity.group().reduceCount();
 
-        severityChart /* dc.pieChart('#severity-chart', 'chartGroup') */
-            .configure({
-                width: totalWidth / 2.1,
-                height: 300,
+        severityChart
+            .width(480)
+            .height(480)
+            .slicesCap(4)
+            // .innerRadius(50)
+            // .externalLabels(50)
+            .externalRadiusPadding(50)
+            .drawPaths(false)
+            .legend(dc.legend().x(20).y(20).itemHeight(13).gap(10))
+            .dimension(severity)
+            .group(severityGroup)
+
+        imageChart
+            .width(700)
+            .height(480)
+            .x(d3.scaleLinear().domain([6, 20]))
+            .elasticX(true)
+            .dimension(image)
+            .group(imageGroup)
+            .data(function (group) {
+                return group.top(topImages);
             })
-            .dataProvider(
-                new dc.CFSimpleAdapter({
-                    dimension: severity,
-                    group: severityGroup
-                })
-            );
 
-        imagesChart /* dc.rowChart('#image-chart', 'chartGroup') */
-            .configure({
-                width: totalWidth / 2.1,
-                height: 300,
-                elasticX: true
-            })
-            .configure({
-                // (_optional_) render horizontal grid lines, `default=false`
-                renderHorizontalGridLines: true,
-                // (_optional_) render vertical grid lines, `default=false`
-                renderVerticalGridLines: true
-            })
-            .dataProvider(
-                new dc.CFSimpleAdapter({
-                    dimension: images,
-                    group: imagesGroup,
-                })
-            );
-
-        vulnCount /* dc.dataCount('.dc-data-count', 'chartGroup'); */
-            .configure({
-                // (_optional_) `.html` sets different html when some records or all records are selected.
-                // `.html` replaces everything in the anchor with the html given using the following function.
-                // `%filter-count` and `%total-count` are replaced with the values obtained.
-                html: {
-                    some:
-                        '<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records' +
-                        " | <a href='javascript:chartGroup.filterAll(); chartGroup.redrawAll();'>Reset All</a>",
-                    all: 'All records selected. Please click on the graph to apply filters.',
-                },
+        vulnCount
+            .groupAll(all)
+            .html({
+                some:
+                    '<strong>%filter-count</strong> selected out of <strong>%total-count</strong> records' +
+                    " | <a href='javascript:chartGroup.filterAll(); chartGroup.redrawAll();'>Reset All</a>",
+                all: 'All records selected. Please click on the graph to apply filters.',
             })
             .crossfilter(ndx)
             .groupAll(all);
 
-        vulnTable /* dc.dataTable('.dc-data-table', 'chartGroup') */
-            .configure({
-                size: Infinity,
-                columns: [
-                    {
-                        label: 'CVE',
-                        format: function (d) {
-                            return "<a href=" + d['Vuln link'] + ">" + d['Vulnerability ID'] + "</a>";
-                        }
-                    },
-                    'Severity',
-                    {
-                        label: 'Publish Date',
-                        format: function (d) {
-                            return d['Vuln Publish date'];
-                        }
-                    },
-                    'Image',
-                    {
-                        label: 'Package',
-                        format: function (d) {
-                            return d['Package name'] + ":" + d['Package version'];
-                        }
-                    },
-                ],
-                sortBy: d => d.Severity,
-                order: d3.ascending,
-            })
-            .dataProvider(
-                new dc.CFSimpleAdapter({
-                    dimension: dateDimension,
-                })
-            )
-            .on('renderlet', table => {
+        vulnTable
+            .dimension(vulnID)
+            // .group(function (d) { return d.Severity; })
+
+            .size(Infinity)
+            .columns([
+                {
+                    label: 'CVE',
+                    format: function (d) {
+                        return "<a href=" + d['Vuln link'] + ">" + d['Vulnerability ID'] + "</a>";
+                    }
+                },
+                'Severity',
+                {
+                    label: 'Publish Date',
+                    format: function (d) {
+                        return d['Vuln Publish date'];
+                    }
+                },
+                'Image',
+                {
+                    label: 'Package',
+                    format: function (d) {
+                        return d['Package name'] + ":" + d['Package version'];
+                    }
+                },
+            ])
+            .sortBy(function (d) { return d.Severity; })
+            .order(d3.ascending)
+            .on('renderlet', function (table) {
                 table.selectAll('.dc-table-group').classed('info', true);
+            })
+
+        d3.select('#download')
+            .on('click', function () {
+                var data = vulnID.top(Infinity);
+                var blob = new Blob([d3.csvFormat(data)], { type: "text/csv;charset=utf-8" });
+                saveAs(blob, 'sysdig_filtered_results.csv');
             });
 
-        //#### Rendering
-        chartGroup.renderAll();
+        dc.renderAll();
     });
 }
 
@@ -153,3 +138,4 @@ function titleCase(str) {
 
 $('#csvFile').on('change', readCsvFromFile);
 $('#csvFile').on('click', function () { $(this).val("") });
+
