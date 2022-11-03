@@ -63,7 +63,7 @@ function loadCsv(path) {
 
         packageChart
             .width(1200)
-            .height(200)
+            .height(300)
             .x(d3.scaleLinear().domain([6, 20]))
             .elasticX(true)
             .dimension(package)

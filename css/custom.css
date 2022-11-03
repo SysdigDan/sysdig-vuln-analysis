@@ -5,6 +5,14 @@
   width: 1200px;
 }
 
+.row {
+  width: 1200px;
+}
+
+.content {
+  width: 1200px;
+}
+
 div.dc-chart {
   float: left;
 }
