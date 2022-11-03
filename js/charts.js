@@ -68,11 +68,11 @@ function loadCsv(path) {
             .dimension(kuberentesDimension)
             .group(kuberentesGroup)
             // .legend(dc.legend().x(400).y(120).itemHeight(13).gap(10))
-            // .ringSizes(kuberentesChart.equalRingSizes());
+            .ringSizes(kuberentesChart.defaultRingSizes());
 
         imageChart
-            .width(700)
-            .height(480)
+            .width(1200)
+            .height(300)
             .x(d3.scaleLinear().domain([6, 20]))
             .elasticX(true)
             .dimension(image)
