@@ -1,5 +1,6 @@
+// https://github.com/d3/d3-scale-chromatic
+dc.config.defaultColors(d3.schemePaired)
 
-// dc.config.defaultColors(d3.schemeDark2)
 
 var severityChart = new dc.PieChart('#severity-chart');
 var exploitableChart = new dc.PieChart("#exploitable-chart")
