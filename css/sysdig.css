@@ -33,6 +33,7 @@
 
 .u-section-2 .u-list-item-1 {
   background-image: none;
+  font-size: 13px;
 }
 
 .u-section-2 .u-container-layout-2 {
@@ -50,6 +51,9 @@
 }
 
 .u-section-2 .u-text-2 {
+  font-weight: 300;
+  font-size: 13px;
+  text-transform: none;
   margin: 20px 0 0;
 }
 
@@ -75,7 +79,7 @@
 
 .u-section-2 .u-text-4 {
   font-weight: 300;
-  font-size: 1.125rem;
+  font-size: 13px;
   text-transform: none;
   margin: 20px 0 0;
 }
@@ -102,7 +106,7 @@
 
 .u-section-2 .u-text-6 {
   font-weight: 300;
-  font-size: 1.125rem;
+  font-size: 13px;
   text-transform: none;
   margin: 20px 0 0;
 }
@@ -129,7 +133,7 @@
 
 .u-section-2 .u-text-8 {
   font-weight: 300;
-  font-size: 1.125rem;
+  font-size: 13px;
   text-transform: none;
   margin: 20px 0 0;
 }
@@ -219,7 +223,9 @@
 }
 
 .u-section-3 .u-text-1 {
-  margin: 9px 346px 0 10px;
+  margin: 10px 0px 0 10px;
+  font-size: 13px;
+  color: #738a96;
 }
 
 .u-section-3 .u-group-1 {
@@ -398,6 +404,8 @@
 
 .u-section-4 .u-text-1 {
   margin: 0 auto 0 10px;
+  font-size: 13px;
+  color: #738a96;
 }
 
 .u-section-4 .u-group-2 {
@@ -443,6 +451,8 @@
 
 .u-section-5 .u-text-1 {
   margin: 0 auto 0 10px;
+  font-size: 13px;
+  color: #738a96;
 }
 
 .u-section-5 .u-group-2 {
@@ -488,6 +498,8 @@
 
 .u-section-6 .u-text-1 {
   margin: 0 auto 0 10px;
+  font-size: 13px;
+  color: #738a96;
 }
 
 .u-section-6 .u-group-2 {

@@ -96,7 +96,8 @@ function loadCsv(path) {
                 .y(15)
                 .itemHeight(15)
                 .gap(15)
-                .horizontal(false))
+                .horizontal(false)
+                .autoItemWidth(true))
             .dimension(severity)
             .group(severityGroup);
 
@@ -117,7 +118,8 @@ function loadCsv(path) {
                 .y(15)
                 .itemHeight(15)
                 .gap(15)
-                .horizontal(false))
+                .horizontal(false)
+                .autoItemWidth(true))
             .dimension(exploitable)
             .group(exploitableGroup);
 
