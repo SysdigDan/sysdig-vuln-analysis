@@ -1,47 +1,45 @@
 <!DOCTYPE html>
-<html style="font-size: 13px;" lang="en"><head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html style="font-size: 13px;" lang="en">
+  <head>
     <meta charset="utf-8">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>Sysdig Vulnerability Analysis</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-<link rel="stylesheet" href="sysdig.css" media="screen">
-    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 4.21.5, nicepage.com">
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i">
-    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i">
-    
-    
-    
-    
-    
-    
-    
-    
-    <script type="application/ld+json">{
-		"@context": "http://schema.org",
-		"@type": "Organization",
-		"name": "",
-		"logo": "images/sysdig-logo.svg"
-}</script>
-    <meta name="theme-color" content="#00abc7">
-    <meta property="og:title" content="Sysdig Vulnerability Analysis">
-    <meta property="og:type" content="website">
+
+    <title>Sysdig Vulnerability Reporting</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/dc.css" />
+    <link rel="stylesheet" type="text/css" href="css/nicepage.css">
+    <link rel="stylesheet" type="text/css" href="css/sysdig.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script class="u-script" type="text/javascript" src="js/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script>
   </head>
-  <body data-home-page="sysdig.html" data-home-page-title="sysdig" class="u-body u-custom-color-7 u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-sticky u-white u-header" id="sec-d2af" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><div class="u-clearfix u-sheet u-sheet-1">
+
+  <body data-home-page="sysdig.html" data-home-page-title="sysdig" class="u-body u-custom-color-7 u-xl-mode" data-lang="en">
+    <header class="u-clearfix u-header u-sticky u-white u-header" id="sec-d2af" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+      <div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="230" data-image-height="82">
           <img src="images/sysdig-logo.svg" class="u-logo-image u-logo-image-1">
         </a>
         <div class="u-clearfix u-container-align-center u-group-elements u-valign-middle u-group-elements-1">
-          <a href="https://nicepage.com/c/education-website-templates" class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-1">TRY EXAMPLE REPORT</a>
-          <a href="https://nicepage.com/c/education-website-templates" class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-2" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""> &nbsp;LOAD REPORT (CSV)</a>
+          <label class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-1"
+            onclick="loadCsv('data/sysdig.csv')">TRY EXAMPLE REPORT
+          </label>
+          <label class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-2"
+            data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+            &nbsp;LOAD
+            REPORT (CSV) <input id="csvFile" type="file" accept="text/csv" style="display: none;" required>
+          </label>
         </div>
-      </div></header>
+      </div>
+    </header>
+
     <section class="u-clearfix u-container-align-center u-custom-color-7 u-section-1" id="sec-1a74">
       <div class="u-clearfix u-sheet u-sheet-1"></div>
     </section>
+
     <section class="u-align-center u-clearfix u-white u-section-2" id="carousel_8a6a">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
@@ -50,25 +48,25 @@
               <div class="u-repeater u-repeater-1">
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-1">
                   <div class="u-container-layout u-similar-container u-container-layout-2"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-1"><img src="images/1500455-b67058aa.png" alt=""></span>
-                    <h3 class="u-text u-text-1" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">2.105</h3>
+                    <h3 class="u-text u-text-1" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500">2105</h3>
                     <h4 class="u-text u-text-2"> Total Vulnerabilities</h4>
                   </div>
                 </div>
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-2">
                   <div class="u-container-layout u-similar-container u-container-layout-3"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-2"><img src="images/272340-d13c327e.png" alt=""></span>
-                    <h3 class="u-text u-text-3" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000"> 3.158</h3>
+                    <h3 class="u-text u-text-3" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500"> 3158</h3>
                     <h4 class="u-text u-text-4">Critical Packages</h4>
                   </div>
                 </div>
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-3">
                   <div class="u-container-layout u-similar-container u-container-layout-4"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-3"><img src="images/4909991-c6286973.png" alt=""></span>
-                    <h3 class="u-text u-text-5" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000">297</h3>
+                    <h3 class="u-text u-text-5" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500">297</h3>
                     <h4 class="u-text u-text-6">% Images Failing Policy</h4>
                   </div>
                 </div>
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-4">
                   <div class="u-container-layout u-similar-container u-container-layout-5"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-4"><img src="images/4466298-0aa044ac.png" alt=""></span>
-                    <h3 class="u-text u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000"> 5.282</h3>
+                    <h3 class="u-text u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500"> 5282</h3>
                     <h4 class="u-text u-text-8"> Other</h4>
                   </div>
                 </div>
@@ -78,6 +76,7 @@
         </div>
       </div>
     </section>
+
     <section class="u-clearfix u-white u-section-3" id="sec-6833">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <div class="u-clearfix u-expanded-width u-gutter-10 u-layout-wrap u-layout-wrap-1">
@@ -90,7 +89,8 @@
                       <h4 class="u-align-left u-text u-text-1">Vulnerabilities by Severity</h4>
                       <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-white u-group-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
                         <div class="u-container-layout u-container-layout-2">
-                          <h4 class="u-text u-text-default u-text-2">RESET FILTER</h4>
+                          <a class="u-text u-text-default u-text-2" style="font-size: 11px;" href="javascript:severityChart.filterAll();dc.redrawAll();"> REST FILTER</a>
+                          <div id="severity-chart" style="text-align:center;"></div>
                         </div>
                       </div>
                     </div>
@@ -100,7 +100,9 @@
                       <h4 class="u-text u-text-3">Public Expolit Available</h4>
                       <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-white u-group-2">
                         <div class="u-container-layout u-container-layout-4">
-                          <h4 class="u-text u-text-default u-text-4">RESET FILTER</h4>
+                          <a class="u-text u-text-default u-text-2" style="font-size: 11px;"
+                            href="javascript:exploitableChart.filterAll();dc.redrawAll();"> REST FILTER</a>
+                          <div id="exploitable-chart" style="text-align:center;"></div>
                         </div>
                       </div>
                     </div>
@@ -112,58 +114,69 @@
         </div>
       </div>
     </section>
+
     <section class="u-clearfix u-white u-section-4" id="sec-6b6d">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
           <div class="u-container-layout u-valign-bottom u-container-layout-1">
-            <h4 class="u-text u-text-default u-text-1"> Vulnerabilties by Image (Top 10)</h4>
+            <h4 class="u-text u-text-default u-text-1"> Vulnerabilities by Image (Top 10)</h4>
             <div class="u-border-2 u-border-custom-color-8 u-container-style u-expanded-width u-group u-radius-5 u-shape-round u-white u-group-2">
-              <div class="u-container-layout u-container-layout-2"></div>
+              <div class="u-container-layout u-container-layout-2">
+                <a class="u-text u-text-default u-text-2" style="margin: 0 0 0 auto; font-size: 11px;"
+                  href="javascript:imageChart.filterAll();dc.redrawAll();"> REST FILTER</a>
+                <div id="image-chart" style="text-align:center;"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
     <section class="u-clearfix u-white u-section-5" id="carousel_cd78">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
           <div class="u-container-layout u-valign-bottom u-container-layout-1">
-            <h4 class="u-text u-text-default u-text-1"> Vulnerabilties by Image (Top 10)</h4>
+            <h4 class="u-text u-text-default u-text-1"> Vulnerabilities by Package (Top 10)</h4>
             <div class="u-border-2 u-border-custom-color-8 u-container-style u-expanded-width u-group u-radius-5 u-shape-round u-white u-group-2">
-              <div class="u-container-layout u-container-layout-2"></div>
+              <div class="u-container-layout u-container-layout-2">
+                <a class="u-text u-text-default u-text-2" style="margin: 0 0 0 auto; font-size: 11px;"
+                  href="javascript:packageChart.filterAll();dc.redrawAll();"> REST FILTER</a>
+                <div id="package-chart" style="text-align:center;"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
     <section class="u-clearfix u-white u-section-6" id="carousel_6f4d">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
           <div class="u-container-layout u-valign-bottom u-container-layout-1">
             <h4 class="u-text u-text-default u-text-1">Filtered Vulnerabilities List (Max 1,000)</h4>
             <div class="u-border-2 u-border-custom-color-8 u-container-style u-expanded-width u-group u-radius-5 u-shape-round u-white u-group-2">
-              <div class="u-container-layout u-container-layout-2"></div>
+              <div class="u-container-layout u-container-layout-2">
+                <table class="table table-hover dc-data-table"></table>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
     <section class="u-clearfix u-white u-section-7" id="sec-639e">
       <div class="u-clearfix u-sheet u-sheet-1"></div>
     </section>
-    
-    
-    <footer class="u-align-center u-clearfix u-custom-color-1 u-footer u-footer" id="sec-fad2"><div class="u-clearfix u-sheet u-sheet-1"></div></footer>
-    <section class="u-backlink u-clearfix u-grey-80">
-      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
-        <span>Web Templates</span>
-      </a>
-      <p class="u-text">
-        <span>created with</span>
-      </p>
-      <a class="u-link" href="https://nicepage.com/html-website-builder" target="_blank">
-        <span>HTML Website Builder</span>
-      </a>. 
-    </section>
-  
-</body></html>
+
+    <footer class="u-align-center u-clearfix u-custom-color-1 u-footer u-footer" id="sec-fad2">
+      <div class="u-clearfix u-sheet u-sheet-1"></div>
+    </footer>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script type="text/javascript" src="js/crossfilter.js"></script>
+    <script type="text/javascript" src="js/dc.js"></script>
+    <script type="text/javascript" src="js/FileSaver.js"></script>
+    <script type="text/javascript" src="js/sysdig.js"></script>
+  </body>
+</html>
