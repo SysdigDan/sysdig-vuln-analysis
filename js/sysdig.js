@@ -24,7 +24,7 @@ function loadCsv(path) {
         // const numberFormat = d3.format('.2f');
         const topImages = 10;
         const topPackages = 10;
-        const topRows = 500;
+        const topRows = 1000;
 
         vulnerabilities.forEach(function (d) {
             d.VulnID = d['Vulnerability ID'];
@@ -225,8 +225,7 @@ function readCsvFromFile(evt) {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         var f = evt.target.files[0];
         var reader = new FileReader();
-        reader.onload = (function (theFile) {
-
+        reader.onload = (function () {
             return function (e) {
                 loadCsv(e.target.result);
             };
