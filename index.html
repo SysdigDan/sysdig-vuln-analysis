@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html style="font-size: 13px;" lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="keywords" content="">
     <meta name="description" content="">
 
-    <title>Sysdig Vulnerability Reporting</title>
+    <title>Sysdig Vulnerability Analysis</title>
 
     <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/dc.css" />
@@ -15,59 +15,72 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script class="u-script" type="text/javascript" src="js/jquery.js" defer=""></script>
-    <!-- <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script> -->
+    <script class="u-script" type="text/javascript" src="js/nicepage.js" defer=""></script>
   </head>
 
-  <body data-home-page="sysdig.html" data-home-page-title="sysdig" class="u-body u-custom-color-7 u-xl-mode" data-lang="en">
-    <header class="u-clearfix u-header u-sticky u-white u-header" id="sec-d2af" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://sysdig.com" class="u-image u-logo u-image-1" data-image-width="230" data-image-height="82">
-          <img src="images/sysdig-logo.svg" class="u-logo-image u-logo-image-1">
-        </a>
-        <div class="u-clearfix u-container-align-center u-group-elements u-valign-middle u-group-elements-1">
-          <label class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-1"
-            onclick="loadCsv('data/sysdig.csv')">TRY EXAMPLE REPORT
-          </label>
-          <label class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-2"
-            data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
-            &nbsp;LOAD
-            REPORT (CSV) <input id="csvFile" type="file" accept="text/csv" style="display: none;" required>
-          </label>
+  <body class="u-body u-custom-color-7 u-xl-mode" data-lang="en">
+    <header class=" u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-clearfix u-header u-section-row-container" id="sec-d2af" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="" style="">
+      <div class="u-section-rows">
+        <div class="u-clearfix u-section-row u-sticky u-white u-section-row-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+          <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+            <a href="https://sysdig.com" class="u-image u-logo u-image-1" data-image-width="230" data-image-height="82">
+              <img src="images/sysdig-logo.svg" class="u-logo-image u-logo-image-1">
+            </a>
+            <div class="u-clearfix u-container-align-center u-group-elements u-valign-middle u-group-elements-1">
+              <label class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-1"
+                onclick="loadCsv('data/sysdig.csv')">TRY EXAMPLE REPORT
+              </label>
+              <label class="u-align-center u-btn u-button-style u-hover-palette-2-base u-palette-1-base u-radius-7 u-btn-2"
+                data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+                &nbsp;LOAD REPORT (CSV) <input id="csvFile" type="file" accept="text/csv" style="display: none;" required>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="u-section-row u-section-row-2">
+          <div class="u-clearfix u-sheet u-sheet-2">
+            <div id="search" class="u-border-1 u-border-grey-30 u-search u-search-left u-white u-search-1">
+              <span class="u-search-icon u-spacing-10">
+                <svg height="20px" viewBox="0 0 24 24" width="20px" class="u-svg-link">
+                  <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+              </span>
+              <input class="dc-text-filter-input" autocomplete="off" type="text" placeholder="CVE Filter" value="">
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    <section class="u-clearfix u-container-align-center u-custom-color-7 u-section-1" id="sec-1a74">
-      <div class="u-clearfix u-sheet u-sheet-1"></div>
-    </section>
-
-    <section class="u-align-center u-clearfix u-white u-section-2" id="carousel_8a6a">
+    <section class="u-align-center u-clearfix u-white u-section-1" id="carousel_8a6a">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
-          <div class="u-container-layout u-valign-bottom u-container-layout-1">
+          <div class="u-container-layout u-container-layout-1">
             <div class="u-expanded-width u-layout-grid u-list u-list-1">
               <div class="u-repeater u-repeater-1">
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-1">
                   <div class="u-container-layout u-similar-container u-container-layout-2"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-1"><img src="images/1500455-b67058aa.png" alt=""></span>
-                    <h3 class="u-text u-text-1" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500">2105</h3>
+                    <h2 id="vulncount" class="u-text u-text-1" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="3000" data-animation-delay="0" data-animation-direction="">0</h2>
                     <h4 class="u-text u-text-2"> Total Vulnerabilities</h4>
                   </div>
                 </div>
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-2">
                   <div class="u-container-layout u-similar-container u-container-layout-3"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-2"><img src="images/272340-d13c327e.png" alt=""></span>
-                    <h3 class="u-text u-text-3" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500"> 3158</h3>
+                    <h2 class="u-text u-text-3" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500" data-animation-delay="0" data-animation-direction="">0</h2>
                     <h4 class="u-text u-text-4">Critical Packages</h4>
                   </div>
                 </div>
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-3">
                   <div class="u-container-layout u-similar-container u-container-layout-4"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-3"><img src="images/4909991-c6286973.png" alt=""></span>
-                    <h3 class="u-text u-text-5" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500">297</h3>
+                    <h2 class="u-text u-text-5" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500" data-animation-delay="0" data-animation-direction="">0</h2>
                     <h4 class="u-text u-text-6">% Images Failing Policy</h4>
                   </div>
                 </div>
                 <div class="u-align-center u-border-2 u-border-custom-color-8 u-container-style u-list-item u-radius-5 u-repeater-item u-shape-round u-white u-list-item-4">
                   <div class="u-container-layout u-similar-container u-container-layout-5"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-4"><img src="images/4466298-0aa044ac.png" alt=""></span>
-                    <h3 class="u-text u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500"> 5282</h3>
+                    <h2 class="u-text u-text-7" data-animation-name="counter" data-animation-event="scroll" data-animation-duration="500" data-animation-delay="0" data-animation-direction="">0</h2>
                     <h4 class="u-text u-text-8"> Other</h4>
                   </div>
                 </div>
@@ -78,34 +91,87 @@
       </div>
     </section>
 
-    <section class="u-clearfix u-white u-section-3" id="sec-6833">
+    <section class="u-clearfix u-white u-section-2" id="sec-6833">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <div class="u-clearfix u-expanded-width u-gutter-10 u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
-            <div class="u-layout-col">
-              <div class="u-size-60">
-                <div class="u-layout-row">
-                  <div class="u-container-style u-custom-color-7 u-layout-cell u-left-cell u-radius-5 u-shape-round u-size-30 u-layout-cell-1" src="" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
-                    <div class="u-container-layout u-container-layout-1">
-                      <h4 class="u-align-left u-text u-text-1" style="text-transform: uppercase;">Vulnerabilities by Severity</h4>
-                      <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-white u-group-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
-                        <div class="u-container-layout u-container-layout-2">
-                          <a class="u-text u-text-default u-text-2" style="font-size: 11px;" href="javascript:severityChart.filterAll();dc.redrawAll();"> REST FILTER</a>
-                          <div id="severity-chart" style="text-align:center;"></div>
-                        </div>
-                      </div>
+            <div class="u-layout-row">
+              <div class="u-container-style u-custom-color-7 u-layout-cell u-size-20 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <h6 class="u-text u-text-default u-text-1">vulnerability by severity</h6>
+                  <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-preserve-proportions u-radius-5 u-shape-round u-white u-group-1">
+                    <div class="u-container-layout u-valign-top u-container-layout-2">
+                      <!-- <h6 class="u-text u-text-default u-text-2">RESET FILTER</h6> -->
+                      <a class="u-text u-text-default u-text-2" style="font-size: 13px;"
+                        href="javascript:severityChart.filterAll();dc.redrawAll();"> REST FILTER</a>
+                      <div id="severity-chart" style="text-align:center;"></div>
                     </div>
                   </div>
-                  <div class="u-align-left u-container-style u-custom-color-7 u-layout-cell u-radius-5 u-right-cell u-shape-round u-size-30 u-layout-cell-2">
-                    <div class="u-container-layout u-container-layout-3">
-                      <h4 class="u-align-left u-text u-text-1" style="text-transform: uppercase;">Public Expolit Available</h4>
-                      <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-white u-group-2">
-                        <div class="u-container-layout u-container-layout-4">
-                          <a class="u-text u-text-default u-text-2" style="font-size: 11px;"
-                            href="javascript:exploitableChart.filterAll();dc.redrawAll();"> REST FILTER</a>
-                          <div id="exploitable-chart" style="text-align:center;"></div>
-                        </div>
-                      </div>
+                </div>
+              </div>
+              <div class="u-container-style u-custom-color-7 u-layout-cell u-shape-rectangle u-size-20 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-3">
+                  <h6 class="u-text u-text-default u-text-3">Public Exploit Available</h6>
+                  <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-preserve-proportions u-radius-5 u-shape-round u-white u-group-2">
+                    <div class="u-container-layout u-valign-top u-container-layout-4">
+                      <!-- <h6 class="u-text u-text-default u-text-4">RESET FILTER</h6> -->
+                      <a class="u-text u-text-default u-text-2" style="font-size: 13px;"
+                        href="javascript:exploitableChart.filterAll();dc.redrawAll();"> REST FILTER</a>
+                      <div id="exploitable-chart" style="text-align:center;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-container-style u-custom-color-7 u-layout-cell u-size-20 u-layout-cell-3">
+                <div class="u-container-layout u-container-layout-5">
+                  <h6 class="u-text u-text-default u-text-5">Expolitability</h6>
+                  <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-preserve-proportions u-radius-5 u-shape-round u-white u-group-3">
+                    <div class="u-container-layout u-valign-top u-container-layout-6">
+                      <h6 class="u-text u-text-default u-text-6">RESET FILTER</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="u-clearfix u-white u-section-3" id="carousel_85b9">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-gutter-10 u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-custom-color-7 u-layout-cell u-size-20 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <h6 class="u-text u-text-default u-text-1">Vulnerability per base image</h6>
+                  <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-preserve-proportions u-radius-5 u-shape-round u-white u-group-1">
+                    <div class="u-container-layout u-valign-top u-container-layout-2">
+                      <h6 class="u-text u-text-default u-text-2">RESET FILTER</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-container-style u-custom-color-7 u-layout-cell u-shape-rectangle u-size-20 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-3">
+                  <h6 class="u-text u-text-default u-text-3">Most vulnerable entity (top 10)</h6>
+                  <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-preserve-proportions u-radius-5 u-shape-round u-white u-group-2">
+                    <div class="u-container-layout u-valign-top u-container-layout-4">
+                      <h6 class="u-text u-text-default u-text-4">RESET FILTER</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-container-style u-custom-color-7 u-layout-cell u-size-20 u-layout-cell-3">
+                <div class="u-container-layout u-container-layout-5">
+                  <h6 class="u-text u-text-default u-text-5">Fixable Vulnerabilies</h6>
+                  <div class="u-border-2 u-border-custom-color-8 u-container-style u-group u-preserve-proportions u-radius-5 u-shape-round u-white u-group-3">
+                    <div class="u-container-layout u-valign-top u-container-layout-6">
+                      <!-- <h6 class="u-text u-text-default u-text-6">RESET FILTER</h6> -->
+                      <a class="u-text u-text-default u-text-2" style="font-size: 13px;"
+                        href="javascript:fixAvailableChart.filterAll();dc.redrawAll();"> REST FILTER</a>
+                      <div id="fix-chart" style="text-align:center;"></div>
                     </div>
                   </div>
                 </div>
@@ -119,11 +185,12 @@
     <section class="u-clearfix u-white u-section-4" id="sec-6b6d">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
-          <div class="u-container-layout u-valign-bottom u-container-layout-1">
-            <h4 class="u-align-left u-text u-text-1" style="text-transform: uppercase;"> Vulnerabilities by Image (Top 10)</h4>
+          <div class="u-container-layout u-container-layout-1">
+            <h6 class="u-text u-text-default u-text-1"> Vulnerabilties by Image (Top 10)</h6>
             <div class="u-border-2 u-border-custom-color-8 u-container-style u-expanded-width u-group u-radius-5 u-shape-round u-white u-group-2">
-              <div class="u-container-layout u-container-layout-2">
-                <a class="u-text u-text-default u-text-2" style="margin: 0 0 0 auto; font-size: 11px;"
+              <div class="u-container-layout u-valign-top u-container-layout-2">
+                <!-- <h6 class="u-text u-text-default u-text-2">RESET FILTER</h6> -->
+                <a class="u-text u-text-default u-text-2" style="font-size: 13px;"
                   href="javascript:imageChart.filterAll();dc.redrawAll();"> REST FILTER</a>
                 <div id="image-chart" style="text-align:center;"></div>
               </div>
@@ -136,11 +203,12 @@
     <section class="u-clearfix u-white u-section-5" id="carousel_cd78">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
-          <div class="u-container-layout u-valign-bottom u-container-layout-1">
-            <h4 class="u-align-left u-text u-text-1" style="text-transform: uppercase;"> Vulnerabilities by Package (Top 10)</h4>
+          <div class="u-container-layout u-container-layout-1">
+            <h6 class="u-text u-text-default u-text-1"> Vulnerabilties by Package (Top 10)</h6>
             <div class="u-border-2 u-border-custom-color-8 u-container-style u-expanded-width u-group u-radius-5 u-shape-round u-white u-group-2">
-              <div class="u-container-layout u-container-layout-2">
-                <a class="u-text u-text-default u-text-2" style="margin: 0 0 0 auto; font-size: 11px;"
+              <div class="u-container-layout u-valign-top u-container-layout-2">
+                <!-- <h6 class="u-text u-text-default u-text-2">RESET FILTER</h6> -->
+                <a class="u-text u-text-default u-text-2" style="font-size: 13px;"
                   href="javascript:packageChart.filterAll();dc.redrawAll();"> REST FILTER</a>
                 <div id="package-chart" style="text-align:center;"></div>
               </div>
@@ -150,22 +218,7 @@
       </div>
     </section>
 
-    <section class="u-clearfix u-white u-section-6" id="carousel_6f4d">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-container-style u-custom-color-7 u-expanded-width u-group u-radius-5 u-shape-round u-group-1">
-          <div class="u-container-layout u-valign-bottom u-container-layout-1">
-            <h4 class="u-align-left u-text u-text-1" style="text-transform: uppercase;">Filtered Vulnerabilities List (Max 1,000)</h4>
-            <div class="u-border-2 u-border-custom-color-8 u-container-style u-expanded-width u-group u-radius-5 u-shape-round u-white u-group-2">
-              <div class="u-container-layout u-container-layout-2">
-                <table class="table table-hover dc-data-table"></table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="u-clearfix u-white u-section-7" id="sec-639e">
+    <section class="u-clearfix u-white u-section-6" id="sec-639e">
       <div class="u-clearfix u-sheet u-sheet-1"></div>
     </section>
 
@@ -173,11 +226,11 @@
       <div class="u-clearfix u-sheet u-sheet-1"></div>
     </footer>
 
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <script type="text/javascript" src="js/crossfilter.js"></script>
-    <script type="text/javascript" src="js/dc.js"></script>
-    <script type="text/javascript" src="js/FileSaver.js"></script>
-    <script type="text/javascript" src="js/sysdig.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script type="text/javascript" src="js/crossfilter.js"></script>
+  <script type="text/javascript" src="js/dc.js"></script>
+  <script type="text/javascript" src="js/FileSaver.js"></script>
+  <script type="text/javascript" src="js/sysdig.js"></script>
   </body>
 </html>

@@ -6,12 +6,13 @@ dc.config.defaultColors(_schemeSysdig)
 
 var severityChart = new dc.PieChart('#severity-chart');
 var exploitableChart = new dc.PieChart("#exploitable-chart")
+var fixAvailableChart = new dc.PieChart('#fix-chart');
 var imageChart = new dc.RowChart("#image-chart");
 var packageChart = new dc.RowChart("#package-chart");
 var vulnCount = new dc.DataCount('.dc-data-count');
 var vulnTable = new dc.DataTable('.dc-data-table');
 var kuberentesChart = new dc.SunburstChart("#kuberentes-chart");
-var searchWidget = new dc.TextFilterWidget("#search-widget")
+var searchWidget = new dc.TextFilterWidget("#search")
 
 function loadCsv(path) {
 
@@ -41,12 +42,16 @@ function loadCsv(path) {
             } else {
                 d.SeveritySort = 5;
             }
+            if (d['Vuln Fix date']) {
+                d.FixAvailable = "true"
+            } else {
+                d.FixAvailable = "false"
+            }
             d.Package = d['Package name'] + ':' + d['Package version'];
             d.Cluster = d['K8S cluster name'];
             d.Namespace = d['K8S namespace name'];
             d.Workload = d['K8S workload name'];
             d.PublicExploit = d['Public Exploit'];
-            d
         });
 
         var ndx = crossfilter(vulnerabilities);
@@ -65,6 +70,9 @@ function loadCsv(path) {
         var severity = ndx.dimension(function (d) { return d.Severity; });
         var severityGroup = severity.group();
 
+        var fixAvailable = ndx.dimension(function (d) { return d.FixAvailable; });
+        var fixAvailableGroup = fixAvailable.group();
+
         var package = ndx.dimension(function (d) { return d.Package; });
         var packageGroup = package.group();
 
@@ -73,14 +81,18 @@ function loadCsv(path) {
         });
         var kuberentesGroup = kuberentesDimension.group();
 
+        var vulncount = vulnGroup.all().filter(kv => kv.value).length;
+        d3.select("#vulncount").text(vulncount);
 
-
+        criticalpkgs = packageGroup.all().filter(kv => kv.value).length;
+        console.log(criticalpkgs);
 
         searchWidget
+            .placeHolder("CVE Filter")
             .dimension(vulnID);
 
         severityChart
-            .width(500)
+            .width(300)
             .height(300)
             .slicesCap(5)
             .innerRadius(30)
@@ -90,19 +102,24 @@ function loadCsv(path) {
                 .domain(["Critical", "High", "Medium", "Low", "Negligible"])
                 .range(["#AE44C5", "#EE635E", "#FA8C16", "#F6CA09", "#91A7B3"])
                 )
-            .legend(dc.legend()
-                .highlightSelected(true)
-                .legendText(function (d) { return d.name + ' | ' + d.data; })
-                .y(15)
-                .itemHeight(15)
-                .gap(15)
-                .horizontal(false)
-                .autoItemWidth(true))
+            .label(function (d) {
+                return d.key + ' ( ' + d.value + ' ) ';
+            })
+            // .legend(dc.legend()
+            //     .highlightSelected(true)
+            //     .legendText(function (d) { return d.name + ' | ' + d.data; })
+            //     .legendWidth(270)
+            //     .x(5)
+            //     .y(240)
+            //     .itemHeight(15)
+            //     .gap(15)
+            //     .horizontal(true)
+            //     .autoItemWidth(true))
             .dimension(severity)
             .group(severityGroup);
 
         exploitableChart
-            .width(500)
+            .width(300)
             .height(300)
             .slicesCap(2)
             .innerRadius(30)
@@ -112,16 +129,51 @@ function loadCsv(path) {
                 .domain(["true", "false"])
                 .range(["#EC7063", "#52BE80"])
             )
-            .legend(dc.legend()
-                .highlightSelected(true)
-                .legendText(function (d) { return d.name + ' | ' + d.data; })
-                .y(15)
-                .itemHeight(15)
-                .gap(15)
-                .horizontal(false)
-                .autoItemWidth(true))
+            .on('renderlet.a', function (chart) {
+                chart.selectAll('text.pie-slice').text(function (d) {
+                    return d.data.key + ' ( ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2 * Math.PI) * 100) + '% )';
+                });
+            })
+            // .legend(dc.legend()
+            //     .highlightSelected(true)
+            //     .legendText(function (d) { return d.name + ' | ' + d.data; })
+            //     .legendWidth(15)
+            //     .y(15)
+            //     .itemHeight(15)
+            //     .gap(15)
+            //     .horizontal(false)
+            //     .autoItemWidth(true))
             .dimension(exploitable)
             .group(exploitableGroup);
+
+        fixAvailableChart
+            .width(300)
+            .height(300)
+            .slicesCap(2)
+            .innerRadius(30)
+            .externalRadiusPadding(15)
+            .drawPaths(false)
+            .colors(d3.scaleOrdinal()
+                .domain(["true", "false"])
+                .range(["#52BE80", "#EC7063"])
+            )
+            .on('renderlet.a', function (chart) {
+                chart.selectAll('text.pie-slice').text(function (d) {
+                    return d.data.key + ' ( ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2 * Math.PI) * 100) + '% )';
+                })
+            })
+            // .legend(dc.legend()
+            //     .highlightSelected(true)
+            //     .legendText(function (d) { return d.name + ' | ' + d.data; })
+            //     .legendWidth(270)
+            //     .x(5)
+            //     .y(240)
+            //     .itemHeight(15)
+            //     .gap(15)
+            //     .horizontal(true)
+            //     .autoItemWidth(true))
+            .dimension(fixAvailable)
+            .group(fixAvailableGroup);
 
         kuberentesChart
             .width(600)
@@ -133,23 +185,29 @@ function loadCsv(path) {
             .ringSizes(kuberentesChart.defaultRingSizes());
 
         imageChart
-            .width(1050)
-            .height(355)
+            .width(1100)
+            .height(380)
             .x(d3.scaleLinear().domain([6, 20]))
             .elasticX(true)
             .dimension(image)
             .group(imageGroup)
+            .label(function (d) {
+                return d.key + ' ( ' + d.value + ' ) ';
+            })
             .data(function (group) {
                 return group.top(topImages);
             });
 
         packageChart
             .width(1050)
-            .height(355)
+            .height(380)
             .x(d3.scaleLinear().domain([6, 20]))
             .elasticX(true)
             .dimension(package)
             .group(packageGroup)
+            .label(function (d) {
+                return d.key + ' ( ' + d.value + ' ) ';
+            })
             .data(function (group) {
                 return group.top(topPackages);
             });
